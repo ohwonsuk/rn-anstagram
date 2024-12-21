@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Header } from '../Header/Header';
+import { Header } from '../components/Header/Header';
 
 export const AddFeedScreen:React.FC = () => {
   return (

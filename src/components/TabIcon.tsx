@@ -6,7 +6,7 @@ export const TabIcon:React.FC<{
   visibleBadge:boolean,
   iconName:IconName,
   iconColor:string,
-  fontSize:number
+  fontSize?:number
 }> = (props) => {
   if (props.visibleBadge) {
     return (

@@ -17,9 +17,6 @@ export default [
       react: {
         version: "18.3.1"
       }
-    },
-    rules: {
-      "react/prop-types": "off"
     }
   },
   {
@@ -32,4 +29,9 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  {
+    rules: {
+      "react/prop-types": "off"
+    }
+  }
 ];
