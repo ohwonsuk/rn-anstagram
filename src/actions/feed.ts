@@ -1,7 +1,7 @@
 import { FeedInfo } from '../@types/FeedInfo';
 import { RootReducer } from '../store';
 import { sleep } from '../utils/sleep';
-import {ThunkAction } from 'redux-thunk';
+import {ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 export const GET_FEED_LIST_REQUEST = 'GET_FEED_LIST_REQUEST' as const;
 export const GET_FEED_LIST_SUCCESS = 'GET_FEED_LIST_SUCCESS' as const;
@@ -46,7 +46,7 @@ export const getFeedList = ():TypeFeedListThunkAction => async(dispatch) => {
       name:'WRITER_NAME_01',
       uid:'WRITER_UID_01'
     },
-    imageUrl:'IMAGE_URL_01',
+    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
     likeHistory:['UID_01', 'UID_02', 'UID_03'],
     createdAt:new Date().getTime()
   },
@@ -57,7 +57,7 @@ export const getFeedList = ():TypeFeedListThunkAction => async(dispatch) => {
       name:'WRITER_NAME_02',
       uid:'WRITER_UID_02'
     },
-    imageUrl:'IMAGE_URL_02',
+    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
     likeHistory:['UID_01', 'UID_02', 'UID_03'],
     createdAt:new Date().getTime()
   },
@@ -68,7 +68,7 @@ export const getFeedList = ():TypeFeedListThunkAction => async(dispatch) => {
       name:'WRITER_NAME_03',
       uid:'WRITER_UID_03'
     },
-    imageUrl:'IMAGE_URL_03',
+    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
     likeHistory:['UID_01', 'UID_02', 'UID_03'],
     createdAt:new Date().getTime()
   },
@@ -79,7 +79,7 @@ export const getFeedList = ():TypeFeedListThunkAction => async(dispatch) => {
       name:'WRITER_NAME_01',
       uid:'WRITER_UID_01'
     },
-    imageUrl:'IMAGE_URL_04',
+    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
     likeHistory:['UID_01', 'UID_02', 'UID_03'],
     createdAt:new Date().getTime()
   },
@@ -171,6 +171,7 @@ export const favoriteFeed = (item:FeedInfo):TypeFeedListThunkAction => async (di
 
 }
 
+export type TypeFeedListDispatch = ThunkDispatch<RootReducer, undefined, TypeFeedListActions>
 export type TypeFeedListThunkAction = ThunkAction<void, RootReducer, undefined, TypeFeedListActions>
 export type TypeFeedListActions = 
   | ReturnType<typeof getFeedListRequest>

@@ -1,4 +1,4 @@
-import { ThunkAction } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { sleep } from '../utils/sleep';
 import { RootReducer } from '../store';
 import { FeedInfo } from '../@types/FeedInfo';
@@ -57,7 +57,7 @@ export const getMyFeedList = ():TypeUserThunkAction => async (dispatch) => {
       name:'WRITER_NAME_01',
       uid:'WRITER_UID_01'
     },
-    imageUrl:'IMAGE_URL_01',
+    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
     likeHistory:['UID_01', 'UID_02', 'UID_03'],
     createdAt:new Date().getTime()
   },
@@ -68,7 +68,7 @@ export const getMyFeedList = ():TypeUserThunkAction => async (dispatch) => {
       name:'WRITER_NAME_02',
       uid:'WRITER_UID_02'
     },
-    imageUrl:'IMAGE_URL_02',
+    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
     likeHistory:['UID_01', 'UID_02', 'UID_03'],
     createdAt:new Date().getTime()
   },
@@ -79,7 +79,7 @@ export const getMyFeedList = ():TypeUserThunkAction => async (dispatch) => {
       name:'WRITER_NAME_03',
       uid:'WRITER_UID_03'
     },
-    imageUrl:'IMAGE_URL_03',
+    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
     likeHistory:['UID_01', 'UID_02', 'UID_03'],
     createdAt:new Date().getTime()
   },
@@ -90,14 +90,14 @@ export const getMyFeedList = ():TypeUserThunkAction => async (dispatch) => {
       name:'WRITER_NAME_01',
       uid:'WRITER_UID_01'
     },
-    imageUrl:'IMAGE_URL_04',
+    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
     likeHistory:['UID_01', 'UID_02', 'UID_03'],
     createdAt:new Date().getTime()
   },
 ]));
 }
 
-
+export type TypeUserDispatch = ThunkDispatch<RootReducer, undefined, TypeUserInfoActions>
 export type TypeUserThunkAction = ThunkAction<Promise<void>, RootReducer, undefined, TypeUserInfoActions>;
 export type TypeUserInfoActions = 
   | ReturnType<typeof setUserInfo>
