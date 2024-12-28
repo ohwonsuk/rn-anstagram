@@ -12,14 +12,14 @@ export const FeedListScreen:React.FC = () => {
 
   return (
     <View style={{flex:1}}>
-      <Header.Group>
+      <Header>
           <Header.Title title='FEED LIST'></Header.Title>
           <Header.Icon 
             iconName='close' 
             onPress={()=>{
               navigation.goBack();
             }} />
-      </Header.Group>
+      </Header>
 
             <FlatList 
               data={route.params.list}

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "66885161739",
+    "firebase_url": "https://rn-anstagram-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "rn-anstagram",
+    "storage_bucket": "rn-anstagram.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66885161739:android:7d5afabdd54083ae01080e",
+        "android_client_info": {
+          "package_name": "com.peteroh.anstagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66885161739-6c7bp2tgeo9lsflm4vl88340qlh0p4a0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.peteroh.anstagram",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "66885161739-7o5lltli3157jffo6d5cvngs2ikjlrsa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.peteroh.anstagram",
+            "certificate_hash": "0eb6e5e71153263dea0aa83c2908555042f32bb3"
+          }
+        },
+        {
+          "client_id": "66885161739-8iptqdk41hb36lpup3tkl4h2ibe2epj2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjGX-G5_z6R5d_wbNs5fNaJYifka_Ew8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66885161739-8iptqdk41hb36lpup3tkl4h2ibe2epj2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "66885161739-78ta1td5ca5nc2rfspv6ajlol444kp37.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.peteroh.anstagram"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
