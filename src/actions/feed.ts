@@ -2,6 +2,9 @@ import { FeedInfo } from '../@types/FeedInfo';
 import { RootReducer } from '../store';
 import { sleep } from '../utils/sleep';
 import {ThunkAction, ThunkDispatch } from 'redux-thunk';
+import storage from '@react-native-firebase/storage';
+import database from '@react-native-firebase/database';
+import { Platform } from 'react-native';
 
 export const GET_FEED_LIST_REQUEST = 'GET_FEED_LIST_REQUEST' as const;
 export const GET_FEED_LIST_SUCCESS = 'GET_FEED_LIST_SUCCESS' as const;
@@ -37,53 +40,18 @@ export const getFeedListFailure = () => {
 export const getFeedList = ():TypeFeedListThunkAction => async(dispatch) => {
   dispatch(getFeedListRequest());
 
-  await sleep(500);
+  const lastFeedList = await database().ref('/feed').once('value').then((snapshot)=> snapshot.val());
 
-  dispatch(getFeedListSuccess([{
-    id:'ID_01',
-    content:'CONTENT_01',
-    writer:{
-      name:'WRITER_NAME_01',
-      uid:'WRITER_UID_01'
-    },
-    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-    likeHistory:['UID_01', 'UID_02', 'UID_03'],
-    createdAt:new Date().getTime()
-  },
-  {
-    id:'ID_02',
-    content:'CONTENT_02',
-    writer:{
-      name:'WRITER_NAME_02',
-      uid:'WRITER_UID_02'
-    },
-    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-    likeHistory:['UID_01', 'UID_02', 'UID_03'],
-    createdAt:new Date().getTime()
-  },
-  {
-    id:'ID_03',
-    content:'CONTENT_03',
-    writer:{
-      name:'WRITER_NAME_03',
-      uid:'WRITER_UID_03'
-    },
-    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-    likeHistory:['UID_01', 'UID_02', 'UID_03'],
-    createdAt:new Date().getTime()
-  },
-  {
-    id:'ID_04',
-    content:'CONTENT_04',
-    writer:{
-      name:'WRITER_NAME_01',
-      uid:'WRITER_UID_01'
-    },
-    imageUrl:'https://images.pexels.com/photos/5723941/pexels-photo-5723941.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load',
-    likeHistory:['UID_01', 'UID_02', 'UID_03'],
-    createdAt:new Date().getTime()
-  },
-]));
+  const result = Object.keys(lastFeedList).map((key)=>{
+    return {
+      ...lastFeedList[key],
+      id:key,
+      likeHistory: lastFeedList[key].likeHistory ?? []
+    }
+  })
+
+  dispatch(getFeedListSuccess(result));
+
 }
 
 export const createFeedRequest = () => {
@@ -110,20 +78,62 @@ export const createFeed = (item:Omit<FeedInfo, 'id'|'writer'|'createdAt'|'likeHi
 
   const createdAt = new Date().getTime();
   const userInfo = getState().userInfo.userInfo;
+  const pickPhotoUrlList = item.imageUrl.split('/');
+  const pickPhotoFileName = pickPhotoUrlList[pickPhotoUrlList.length-1];
 
-  await sleep(200);
-
-  dispatch(createFeedSuccess({
-    id:'ID-010',
-    content: item.content,
+  const putFileUrl = await storage().ref(pickPhotoFileName)
+                    .putFile(Platform.OS === 'ios' ? item.imageUrl.replace('file://', '') : item.imageUrl)
+                    .then((result)=> storage().ref(result.metadata.fullPath).getDownloadURL());
+  
+  const feedDB = await database().ref('/feed');
+  const saveItem:Omit<FeedInfo,'id'> = {
+    content:item.content,
     writer:{
-      name:userInfo?.name ?? 'Unknown',
-      uid:userInfo?.uid ?? 'Unknown'
+      name:userInfo?.name || 'Unknown',
+      uid:userInfo?.uid || 'Unknown'
     },
-    imageUrl:item.imageUrl,
+    imageUrl:putFileUrl,
     likeHistory:[],
-    createdAt:createdAt
-  }))
+    createdAt
+  }
+
+  await feedDB.push().set({
+    ...saveItem,
+  })
+
+  const lastFeedList = await feedDB.once('value').then((snapshot)=> snapshot.val());
+
+  Object.keys(lastFeedList).forEach((key)=>{
+
+    const item = lastFeedList[key];
+
+    if (item.createdAt == createdAt && putFileUrl === item.imageUrl){
+      dispatch(
+        createFeedSuccess({
+          id:key,
+          content:item.content,
+          writer:item.writer,
+          imageUrl:item.imageUrl,
+          likeHistory:item.likeHistory ?? [],
+          createdAt
+        })
+      )
+    }
+  })
+
+  // await sleep(200);
+
+  // dispatch(createFeedSuccess({
+  //   id:'ID-010',
+  //   content: item.content,
+  //   writer:{
+  //     name:userInfo?.name ?? 'Unknown',
+  //     uid:userInfo?.uid ?? 'Unknown'
+  //   },
+  //   imageUrl:item.imageUrl,
+  //   likeHistory:[],
+  //   createdAt:createdAt
+  // }))
 
 }
 

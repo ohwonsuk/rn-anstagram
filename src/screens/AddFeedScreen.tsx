@@ -11,10 +11,13 @@ import { Icon } from '../components/Icons';
 import { MultiLineInput } from '../components/MultiLineInput';
 import { Spacer } from '../components/Spacer';
 import { Typography } from '../components/Typography';
+import { useDispatch } from 'react-redux';
+import { createFeed, TypeFeedListDispatch } from '../actions/feed';
 
 export const AddFeedScreen:React.FC = () => {
   const rootNavigation = useRootNavigation();
   const safeAreaInsets = useSafeAreaInsets();
+  const dispatch = useDispatch<TypeFeedListDispatch>();
   const [selectedPhoto, setSelectedPhoto] = useState<string|null>(null);
   const [inputMessage, setInputMessage] = useState('');
 
@@ -46,11 +49,20 @@ export const AddFeedScreen:React.FC = () => {
 
   },[]);
 
-  const onPressSave = useCallback(()=>{
+  const onPressSave = useCallback(async()=>{
     if(!canSave) return;
 
     if(selectedPhoto === null) return;
 
+    await dispatch(
+      createFeed({
+        imageUrl:selectedPhoto,
+        content:inputMessage
+      })
+    )
+
+    rootNavigation.goBack();
+    
   }, [canSave, selectedPhoto, inputMessage]);
 
   return (
