@@ -4,11 +4,13 @@ import { Header } from '../components/Header/Header';
 import { FeedListItem } from '../components/FeedListItem';
 import { Spacer } from '../components/Spacer';
 import { useRootNavigation, useRootRoute } from '../navigations/RootStackNavigation';
-import { HeaderIcon } from '../components/Header/HeaderIcon';
+import { useDispatch } from 'react-redux';
+import { favoriteFeed, TypeFeedListDispatch } from '../actions/feed';
 
 export const FeedListScreen:React.FC = () => {
   const route = useRootRoute<'FeedList'>();
   const navigation = useRootNavigation<'FeedList'>();
+  const dispatch = useDispatch<TypeFeedListDispatch>();
 
   return (
     <View style={{flex:1}}>
@@ -24,15 +26,20 @@ export const FeedListScreen:React.FC = () => {
             <FlatList 
               data={route.params.list}
               renderItem={({item})=>{
+                const isLiked = item.likeHistory.length >0 ? true: false;
                 return (
                   <FeedListItem 
                     image={item.imageUrl}
                     comment={item.content}
-                    isLiked={false}
+                    isLiked={isLiked}
                     likeCount={item.likeHistory.length}
                     writer={item.writer.name}
                     onPressFeed={()=>{
                       console.log('onPressFeed');
+                    }}
+                    onPressFavorite={()=>{
+                      console.log('onPressFavorite');
+                      dispatch(favoriteFeed(item));
                     }}
                   />
                 )

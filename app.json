@@ -34,6 +34,7 @@
     "plugins": [
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
+      "@react-native-firebase/crashlytics",
       "@react-native-google-signin/google-signin",
       [
         "expo-build-properties",
@@ -48,6 +49,13 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
+      ],
+      [
+        "react-native-google-mobile-ads",
+      {
+        "androidAppId": "ca-app-pub-1302837095363225~8380541177",
+        "iosAppId": "ca-app-pub-1302837095363225~1020925906"
+      }
       ]
     ]
   }

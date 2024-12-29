@@ -79,7 +79,8 @@ export const signIn = (idToken:string):TypeUserThunkAction => async (dispatch) =
 
 export const getMyFeedList = ():TypeUserThunkAction => async (dispatch, getState) => {
   dispatch(getMyFeedRequest());
-
+  
+  await sleep(500);
   const lastFeedList = await database().ref('/feed').once('value').then((snapshot)=> snapshot.val());
 
   const result = Object.keys(lastFeedList).map((key)=>{

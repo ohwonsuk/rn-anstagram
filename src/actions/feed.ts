@@ -163,23 +163,37 @@ export const favoriteFeed = (item:FeedInfo):TypeFeedListThunkAction => async (di
 
   const myId = getState().userInfo.userInfo?.uid || null;
 
+  const feedDB = database().ref(`/feed/${item.id}`);
+  const feedItem = (await feedDB.once('value').then((snapshot)=> snapshot.val()) )as FeedInfo;
+
   if(myId === null){
     dispatch(favoriteFeedFailure());
     return;
   }
 
-  await sleep(1000);
-  const hasMyId = item.likeHistory.filter((likeUserId)=> likeUserId === myId).length > 0;
-
-  if(hasMyId){
-    // 있을 경우엔 빼는 액션
-    dispatch(favoriteFeedSuccess(item.id, myId, 'del'));
-  } else {
-    dispatch(favoriteFeedSuccess(item.id, myId, 'add'));
-    // 없을 경우엔 추가하는 액션
+  if(typeof feedItem.likeHistory === 'undefined'){
+       await feedDB.update({
+           likeHistory:[myId]
+       })
+       dispatch(favoriteFeedSuccess(item.id, myId, 'add'))
+  } else { 
+       const hasMyId = feedItem.likeHistory.filter((likeUserId)=> likeUserId === myId).length>0;
+       console.log('hasMyId', hasMyId);
+       if(hasMyId){
+           await feedDB.update({
+               likeHistory: feedItem.likeHistory.filter((likeUserId)=> likeUserId !== myId)
+           })
+           // 있을 경우에 빼는 액션
+           dispatch(favoriteFeedSuccess(item.id, myId, 'del'))
+       }else {
+           await feedDB.update({
+               likeHistory: feedItem.likeHistory.concat([myId])
+           })
+           // 없을 경우에 추가하는 액션
+           dispatch(favoriteFeedSuccess(item.id, myId, 'add'))
+       }
+    }
   }
-
-}
 
 export type TypeFeedListDispatch = ThunkDispatch<RootReducer, undefined, TypeFeedListActions>
 export type TypeFeedListThunkAction = ThunkAction<void, RootReducer, undefined, TypeFeedListActions>
