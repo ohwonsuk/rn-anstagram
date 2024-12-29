@@ -22,7 +22,7 @@ export default function App() {
       <SafeAreaProvider>
         <Provider store={store}>
           <RootApp />
-          <BannerAd unitId="ca-app-pub-1302837095363225~8380541177" size={BannerAdSize.FULL_BANNER} />
+          <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.FULL_BANNER} />
         </Provider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
