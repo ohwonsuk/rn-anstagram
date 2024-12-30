@@ -19,10 +19,6 @@ export const HomeScreen:React.FC = () => {
     rootNavigation.navigate('AddFeed');
   },[]);
 
-  const onPressFavorite = useCallback(()=>{
-    
-  },[])
-
   useEffect(()=>{
     carshlytics().crash();
 
@@ -47,6 +43,7 @@ export const HomeScreen:React.FC = () => {
               isLiked={isLiked}
               likeCount={item.likeHistory.length}
               writer={item.writer.name}
+              createdAt={item.createdAt}
               onPressFeed={()=>{
                 console.log('onPressFeed');
               }}

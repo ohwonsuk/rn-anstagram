@@ -27,6 +27,7 @@ export const FeedListScreen:React.FC = () => {
               data={route.params.list}
               renderItem={({item})=>{
                 const isLiked = item.likeHistory.length >0 ? true: false;
+                console.log(item);
                 return (
                   <FeedListItem 
                     image={item.imageUrl}
@@ -34,6 +35,7 @@ export const FeedListScreen:React.FC = () => {
                     isLiked={isLiked}
                     likeCount={item.likeHistory.length}
                     writer={item.writer.name}
+                    createdAt={item.createdAt}
                     onPressFeed={()=>{
                       console.log('onPressFeed');
                     }}

@@ -6,6 +6,7 @@ import { Icon } from './Icons';
 import { Typography } from './Typography';
 import { Spacer } from './Spacer';
 import { DoubleTabButton } from './DoubleTabButton';
+import { getMillisToDateString } from '../utils/DateUtils';
 
 export const FeedListItem:React.FC<{
   image:string;
@@ -13,11 +14,12 @@ export const FeedListItem:React.FC<{
   likeCount:number;
   writer:string;
   comment:string;
+  createdAt:number;
   onPressFeed:()=>void;
   onPressFavorite:()=>void;
 }> = (props) => {
   const {width} = useWindowDimensions();
-
+  console.log('createdAt', props.createdAt);
   const scaleValue = useRef(new Animated.Value(0)).current;
   const alphaValue = useRef(new Animated.Value(0)).current;
 
@@ -65,7 +67,7 @@ export const FeedListItem:React.FC<{
             </View>
           </View>
         </DoubleTabButton>
-        <View>
+        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
           <Button onPress={props.onPressFavorite}>
             <View style={{paddingHorizontal:12, paddingVertical:6 }}>
               <Icon 
@@ -75,6 +77,9 @@ export const FeedListItem:React.FC<{
               />
             </View>
           </Button>
+          <Typography fontSize={16} color='gray'>
+            {getMillisToDateString(props.createdAt)}
+          </Typography>
         </View>
         <View style={{paddingHorizontal:12}}>
           <Typography fontSize={16}>{`좋아요 ${props.likeCount}개`}</Typography>

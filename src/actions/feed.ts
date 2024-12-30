@@ -46,7 +46,7 @@ export const getFeedList = ():TypeFeedListThunkAction => async(dispatch) => {
     return {
       ...lastFeedList[key],
       id:key,
-      likeHistory: lastFeedList[key].likeHistory ?? []
+      likeHistory: lastFeedList[key].likeHistory ?? [],
     }
   })
 
