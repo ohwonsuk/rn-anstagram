@@ -8,9 +8,9 @@ export const RootApp:React.FC = () => {
   
   if(!initialize) 
     return (
-      <SplashView 
-        onFinishLoad={()=> setInitialize(true)}
-      />
+        <SplashView 
+          onFinishLoad={()=> setInitialize(true)}
+        />
   );
 
   return (

@@ -3,6 +3,8 @@ import { View } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import { useDispatch } from 'react-redux';
 import { signIn, TypeUserDispatch } from './actions/user';
+import { LoadingView } from './components/LoadingView';
+
 
 export const SplashView:React.FC<{onFinishLoad:()=>void}> = (props) => {
   const [showLoginButton, setShowLoginButton] = useState(false);
@@ -49,6 +51,10 @@ export const SplashView:React.FC<{onFinishLoad:()=>void}> = (props) => {
   useEffect(()=>{
     appInit();
   }, []);
+
+  if (!showLoginButton) return (
+    <LoadingView />
+  );
 
   return (
     <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
