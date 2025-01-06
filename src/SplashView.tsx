@@ -4,6 +4,9 @@ import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/go
 import { useDispatch } from 'react-redux';
 import { signIn, TypeUserDispatch } from './actions/user';
 import { LoadingView } from './components/LoadingView';
+import { LocalImage } from './components/LocalImage';
+import { Typography } from './components/Typography';
+import { Spacer } from './components/Spacer';
 
 
 export const SplashView:React.FC<{onFinishLoad:()=>void}> = (props) => {
@@ -58,6 +61,14 @@ export const SplashView:React.FC<{onFinishLoad:()=>void}> = (props) => {
 
   return (
     <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+      <View>
+        <LocalImage localAsset={require('../assets/icon.png')} width={100} height={100} />
+      </View>
+      <Spacer space={50} />
+      <View>
+        <Typography fontSize={36} color='blue'>Daily Photo Memo</Typography>
+      </View>
+      <Spacer space={20} />
       {showLoginButton && <GoogleSigninButton onPress={onPressSignIn} />}
     </View>
   )
